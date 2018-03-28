@@ -27,12 +27,10 @@ import android.util.Log;
 
 public class GPS_Service extends Service implements LocationListener {
 
-
     private Context mContext;
-    // flag for GPS status
-    boolean isGPSEnabled = false;
 
-    // flag for network status
+    // flags
+    boolean isGPSEnabled = false;
     boolean isNetworkEnabled = false;
     boolean canGetLocation = false;
 
@@ -44,7 +42,7 @@ public class GPS_Service extends Service implements LocationListener {
     static int time;
     private static final long MIN_TIME_BW_UPDATES = 1000 * time;
 
-    // Declaring a Location Manager
+    // Declaring Location Manager
     protected LocationManager mlocationManager;
 
     public GPS_Service() {
@@ -68,7 +66,7 @@ public class GPS_Service extends Service implements LocationListener {
                 .setContentTitle("GPS Service")
                 .setContentText("Running...")
                 .setContentIntent(pendingIntent).build();
-        startForeground(1337, notification);
+        startForeground(1234, notification);
     }
 
     public Location getLocation() {
@@ -126,18 +124,18 @@ public class GPS_Service extends Service implements LocationListener {
         }
     }
 
-    public double getLatitude(){
-        if(location != null){
-            latitude = location.getLatitude();
-        }
-        return latitude;
-    }
-
     public double getLongitude(){
         if(location != null){
             longitude = location.getLongitude();
         }
         return longitude;
+    }
+
+    public double getLatitude(){
+        if(location != null){
+            latitude = location.getLatitude();
+        }
+        return latitude;
     }
 
     public boolean canGetLocation() {
@@ -147,9 +145,7 @@ public class GPS_Service extends Service implements LocationListener {
     public void showSettingsAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
-        alertDialog.setTitle("GPS is settings");
-
-        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+        alertDialog.setMessage("GPS not enabled. Go to settings?");
 
         alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog,int which) {
@@ -173,9 +169,8 @@ public class GPS_Service extends Service implements LocationListener {
         return null;
     }
 
-
     @Override
-    public void onLocationChanged(Location location) {
+    public void onProviderEnabled(String s) {
 
     }
 
@@ -185,7 +180,7 @@ public class GPS_Service extends Service implements LocationListener {
     }
 
     @Override
-    public void onProviderEnabled(String s) {
+    public void onLocationChanged(Location location) {
 
     }
 
